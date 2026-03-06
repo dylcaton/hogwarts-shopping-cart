@@ -63,7 +63,7 @@
 
 <script setup>
 
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 
 let username = 'Harry';
 let shoppingCartItems = ref([
@@ -143,6 +143,11 @@ function removeItem(id) {
     let taxEstimate = computed(() => subtotal.value * 0.08);
 
     let total = computed(() => subtotal.value + shippingEstimate.value + taxEstimate.value);
+
+    watch(shoppingCartItems, ()=> {
+        localStorage.setItem('hogwartShoppingCart', JSON.stringify(shoppingCartItems))
+    }, {deep: true}
+    )
 </script>
 
 <style scoped>
